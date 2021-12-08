@@ -23,7 +23,6 @@ public class Library extends HttpServlet {
         DAOFactory daoFactory = DAOFactory.getInstance();
         daoBook = daoFactory.getDAOBook("JPA");
     }
-	// Test
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request,response);
