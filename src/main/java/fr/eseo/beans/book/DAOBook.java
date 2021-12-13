@@ -1,4 +1,4 @@
-package fr.eseo.beans;
+package fr.eseo.beans.book;
 
 import java.util.List;
 

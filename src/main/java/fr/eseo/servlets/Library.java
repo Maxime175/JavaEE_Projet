@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eseo.beans.Book;
-import fr.eseo.beans.DAOBook;
+import fr.eseo.beans.book.Book;
+import fr.eseo.beans.book.DAOBook;
 import fr.eseo.beans.DAOFactory;
 
 @WebServlet("/bibliotheque")
@@ -21,7 +21,7 @@ public class Library extends HttpServlet {
 	
 	public void init() throws ServletException {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        daoBook = daoFactory.getDAOBook("JPA");
+        daoBook = daoFactory.getDAOBook();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

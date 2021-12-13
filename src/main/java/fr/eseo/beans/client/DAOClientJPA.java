@@ -1,24 +1,24 @@
-package fr.eseo.beans;
+package fr.eseo.beans.client;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-public class DAOBookJPA implements DAOBook {
-	
+public class DAOClientJPA implements DAOClient {
+
 	private EntityManagerFactory emf;
 	
-	public DAOBookJPA(EntityManagerFactory emf) {
+	public DAOClientJPA(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	@Override
-	public void add(String title, String author, String description) {
+	public void add(String nom, String prenom, String adresse, String mail, String mdp) {
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 		try {
-			entityManager.persist(new Book(title,author,description));
+			entityManager.persist(new Client(nom, prenom, adresse, mail, mdp));
 			entityManager.getTransaction().commit();
 		}
 		finally {
@@ -27,11 +27,11 @@ public class DAOBookJPA implements DAOBook {
 	}
 	
 	@Override
-    public Book getBook(String id) {
+    public Client getClient(String id_client) {
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 		try {
-			return entityManager.find(Book.class, Integer.parseInt(id));
+			return entityManager.find(Client.class, Integer.parseInt(id_client));
 		}
 		finally {
 		  entityManager.close();
@@ -39,26 +39,26 @@ public class DAOBookJPA implements DAOBook {
 	}
 
 	@Override
-	public List<Book> getBooks() {
-		List<Book> catalog;
+	public List<Client> getClients() {
+		List<Client> clients;
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 		try {
-			catalog = entityManager.createQuery("from Book", Book.class).getResultList();
+			clients = entityManager.createQuery("from Client", Client.class).getResultList();
 		}
 		finally {
 		  entityManager.close();
 		}
-		return catalog;
+		return clients;
 	}
 
 	@Override
-	public void update(String id, String title, String author, String description) {
+	public void update(String id_client, String nom, String prenom, String adresse, String mail, String mdp) {
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 		try {
-			Book book = new Book(Integer.parseInt(id),title,author,description);
-			entityManager.merge(book);
+			Client client = new Client(Integer.parseInt(id_client), nom, prenom, adresse, mail, mdp);
+			entityManager.merge(client);
 			entityManager.getTransaction().commit();
 		}
 		finally {
@@ -67,16 +67,17 @@ public class DAOBookJPA implements DAOBook {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id_client) {
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getTransaction().begin();
 		try {
-			Book book = entityManager.find(Book.class, id);
-			entityManager.remove(book);				
+			Client client = entityManager.find(Client.class, id_client);
+			entityManager.remove(client);				
 			entityManager.getTransaction().commit();
 		}
 		finally {
 		  entityManager.close();
 		}
 	}
+
 }

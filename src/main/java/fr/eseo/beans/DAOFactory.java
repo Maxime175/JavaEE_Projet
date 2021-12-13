@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import fr.eseo.beans.book.DAOBook;
+import fr.eseo.beans.book.DAOBookJPA;
+import fr.eseo.beans.client.DAOClient;
+import fr.eseo.beans.client.DAOClientJPA;
+
 public class DAOFactory {
 	
 	private static volatile DAOFactory instance = null;
@@ -32,18 +37,14 @@ public class DAOFactory {
 	    return DriverManager.getConnection(url, username, password);
 	}
 	
-	private void setParamJPA() {
+	public DAOBook getDAOBook() {
 		emf = Persistence.createEntityManagerFactory("Book");
+		return new DAOBookJPA(emf);
 	}
 	
-	public DAOBook getDAOBook(String type) {
-		switch(type) {
-			case "JPA":
-				setParamJPA();
-				return new DAOBookJPA(emf);
-			default:
-				return null;	
-		}
+	public DAOClient getDAOClient() {
+		emf = Persistence.createEntityManagerFactory("Client");
+		return new DAOClientJPA(emf);
 	}
 
 }
